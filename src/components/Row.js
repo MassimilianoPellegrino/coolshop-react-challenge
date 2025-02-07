@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import './Row.css';
 
 function Row({
@@ -11,27 +11,29 @@ function Row({
     deleteRow
 }) {
 
-    const [selectedSign, setSelectedSign] = useState(number >= 0 ? '+' : '-');
-    const [currentNumber, setCurrentNumber] = useState(number);
+    const sign = useMemo(() => number > 0 ? '+' : '-', [number]);
+
+    const handleChangedInputValue = (e) => {
+        const enteredNumber = Math.abs(parseFloat(e.target.value));
+        if (enteredNumber > 0) {
+            const newNumber = sign === '+' ? enteredNumber : -enteredNumber;
+            changeNumber(index, newNumber);
+        }
+    };
 
     return (
         <li>
-            <select value={selectedSign} onChange={(e) => {
-                setSelectedSign(e.target.value);
-                const reversed = (number > 0 && e.target.value === '-') || (number < 0 && e.target.value === '+');
-                if (reversed)
-                    changeSign(index);
-            }}>
+            <select
+                value={sign}
+                onChange={() => changeSign(index)}
+            >
                 <option value='+'>+</option>
                 <option value='-'>-</option>
             </select>
-            <input type="number" value={Math.abs(currentNumber)} onChange={(e) => {
-                if (e.target.value > 0) {
-                    setCurrentNumber(e.target.value);
-                    const newNumber = selectedSign > 0 ? parseFloat(e.target.value) : -parseFloat(e.target.value);
-                    changeNumber(index, newNumber);
-                }
-            }} />
+            <input
+                value={Math.abs(number)}
+                onChange={e => handleChangedInputValue(e)}
+            />
             <button onClick={() => deleteRow(index)}>
                 Delete
             </button>

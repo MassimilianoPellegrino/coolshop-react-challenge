@@ -5,9 +5,9 @@ import Row from './components/Row';
 function App() {
 
   const [rows, setRows] = useState([
-    { number: 1, enabled: true },
-    { number: 1, enabled: true },
-    { number: -1, enabled: true }
+    { number: 100, enabled: true },
+    { number: 30, enabled: true },
+    { number: -7, enabled: true }
   ]);
   const result = useMemo(() => rows.reduce((partialSum, currentRow) => currentRow.enabled ? partialSum + currentRow.number : partialSum, 0), [rows]);
 
@@ -17,9 +17,9 @@ function App() {
     setRows(newRows);
   };
 
-  const changeNumber = (index, newValue) => {
+  const changeNumber = (index, newNumber) => {
     const newRows = [...rows];
-    newRows[index].number = newValue;
+    newRows[index].number = newNumber;
     setRows(newRows);
   };
 
@@ -36,10 +36,7 @@ function App() {
 
   const addRow = () => {
     const newRows = [...rows];
-    newRows.push({
-      number: 1,
-      enabled: true
-    });
+    newRows.push({ number: 1, enabled: true });
     setRows(newRows);
   };
 
