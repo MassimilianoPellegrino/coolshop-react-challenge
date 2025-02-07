@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import Row from './Row';
 import './Calculator.css'
+import { Box, IconButton, List, Typography } from '@mui/material';
+import { Add as AddIcon } from '@mui/icons-material';
 
 function Calculator() {
 
@@ -16,19 +18,19 @@ function Calculator() {
 
     const result = useMemo(calculateResult, [rows]);
 
-    const changeSign = (index) => {
+    const changeRowSign = (index) => {
         const newRows = [...rows];
         newRows[index].number = -rows[index].number;
         setRows(newRows);
     };
 
-    const changeNumber = (index, newNumber) => {
+    const changeRowNumber = (index, newNumber) => {
         const newRows = [...rows];
         newRows[index].number = newNumber;
         setRows(newRows);
     };
 
-    const changeEnablement = (index) => {
+    const changeRowEnablement = (index) => {
         const newRows = [...rows];
         newRows[index].enabled = !rows[index].enabled;
         setRows(newRows);
@@ -46,30 +48,36 @@ function Calculator() {
     };
 
     return (
-        <div>
-            <div>
-                <button onClick={addRow}>
-                    Add row
-                </button>
-            </div>
-            <ul>
-                {rows.map((row, index) =>
-                    <Row
-                        key={index}
-                        index={index}
-                        number={row.number}
-                        enabled={row.enabled}
-                        changeSign={changeSign}
-                        changeNumber={changeNumber}
-                        changeEnablement={changeEnablement}
-                        deleteRow={deleteRow}
-                    />
-                )}
-            </ul>
-            <div>
+        <Box className='calculator'>
+            <Box className='rowsContainer'>
+                <List>
+                    {rows.map((row, index) =>
+                        <Row
+                            key={index}
+                            index={index}
+                            number={row.number}
+                            enabled={row.enabled}
+                            changeSign={changeRowSign}
+                            changeNumber={changeRowNumber}
+                            changeEnablement={changeRowEnablement}
+                            deleteRow={deleteRow}
+                        />
+                    )}
+                </List>
+                <IconButton
+                    sx={{ paddingTop: 1.5 }}
+                    onClick={addRow}
+                    variant='outlined'
+                >
+                    <AddIcon fontSize='medium' />
+                </IconButton>
+            </Box>
+            <Typography
+                paddingTop={1.5}
+            >
                 Result: {result}
-            </div>
-        </div>
+            </Typography>
+        </Box>
     )
 }
 
