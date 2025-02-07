@@ -72,11 +72,11 @@ function Calculator() {
                     <AddIcon fontSize='medium' />
                 </IconButton>
             </Box>
-            <Typography
-                paddingTop={1.5}
-            >
-                Result: {result}
-            </Typography>
+            {rows.length > 0 &&
+                <Typography paddingTop={1.5}>
+                    Result: {result}
+                </Typography>
+            }
         </Box>
     )
 }
