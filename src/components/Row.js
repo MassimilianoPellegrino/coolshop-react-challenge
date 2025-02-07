@@ -22,7 +22,7 @@ function Row({
 
     const handleChangedInputValue = (e) => {
         const enteredNumber = Math.abs(parseFloat(e.target.value));
-        if (enteredNumber > 0) {
+        if (enteredNumber > 0 && enteredNumber < Infinity) {
             const newNumber = sign === '+' ? enteredNumber : -enteredNumber;
             changeNumber(index, newNumber);
         }
