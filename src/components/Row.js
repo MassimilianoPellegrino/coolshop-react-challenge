@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import './Row.css';
-import { IconButton, ListItem, MenuItem, Select, TextField } from '@mui/material';
+import { IconButton, ListItem, MenuItem, Select, Switch, TextField } from '@mui/material';
 import {
     Add as AddIcon,
     Remove as RemoveIcon,
-    DeleteOutline as DeleteIcon,
+    Cancel as CloseIcon,
     PowerSettingsNew as PowerSettingsNewIcon
 } from '@mui/icons-material';
 
@@ -31,6 +31,7 @@ function Row({
     return (
         <ListItem disablePadding sx={{paddingTop: 1.5}}>
             <Select
+                color='text.primary'
                 sx={{marginRight: 1}}
                 variant='standard'
                 className='selectSign'
@@ -55,25 +56,18 @@ function Row({
                 </MenuItem>
             </Select>
             <TextField
+                color='text.primary'
                 sx={{ input: { color: enabled ? 'text.primary' : 'text.disabled' } }}
                 variant='standard'
                 value={Math.abs(number)}
                 onChange={e => handleChangedInputValue(e)}
             />
-            <IconButton
-                onClick={() => changeEnablement(index)}
-                variant='contained'
-            >
-                <PowerSettingsNewIcon
-                    fontSize='small'
-                    color={enabled ? 'success' : 'disabled'}
-                />
-            </IconButton>
+            <Switch defaultChecked size='small' onChange={() => changeEnablement(index)}/>
             <IconButton
                 onClick={() => deleteRow(index)}
                 variant='contained'
             >
-                <DeleteIcon
+                <CloseIcon
                     fontSize='small'
                 />
             </IconButton>
